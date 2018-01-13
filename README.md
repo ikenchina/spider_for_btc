@@ -22,3 +22,5 @@ CREATE TABLE `history_message` (
 启动爬虫服务 python collect.py &
 
 启动API服务 python apicontrol.py 8001 &
+
+默认API接口 http://xxx.xxx.xxx.xxx:8001/api/data get无参数
