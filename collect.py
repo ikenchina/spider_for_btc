@@ -13,9 +13,10 @@ header= configs['headers']
 proxies= {                     ###代理IP
         "http":'http://127.0.0.1:1080'
     }
-
+len_limit = 70
 def collect(type,timestamp):
-	try:
+	try:    
+                global len_limit
 		url = "https://otcbtc.com/sell_offers?currency=%s&fiat_currency=cny&payment_type=all"%type
 		a = requests.get(url=url,headers=header,proxies=proxies)
 		# print(a.text)
@@ -29,6 +30,9 @@ def collect(type,timestamp):
 			type_name = type
 			timestamp = timestamp
 			sava_data([type_name,timestamp,sell_price,price_market])
+                        if type =='eos' and float(sell_price) < len_limit:
+                            len_limit-=1
+                            #sendmail(len_limit)
 			print(type,sell_price,price_market)
 	except:
 		traceback.print_exc()
